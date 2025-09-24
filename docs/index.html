@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Optimal-Horizon Social Robot Navigation in Heterogeneous Crowds using Reinforcement Learning and Model Predictive Control">
+  <meta name="keywords" content="Robot navigation, Social robotics, Reinforcement learning, Model predictive control, Control barrier functions">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> OHSRN | Optimal-Horizon Social Robot Navigation in Heterogeneous Crowds</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  
+  <!-- Favicon设置 - 网页标签图标 -->
+  <link rel="icon" type="image/svg+xml" href="img/robot.png">
+  <link rel="icon" type="image/png" href="img/robot.png">
+  <link rel="apple-touch-icon" href="img/robot.png">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 跨浏览器兼容性重置 */
+    html {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #ffffff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Section - 头部区域样式 */
+    .hero {
+      background: #ffffff; /* 白色背景 */
+      color: #333; /* 深灰色文字 */
+      padding: 2rem 0; /* 减少上下内边距，从4rem减少到2rem */
+      text-align: center; /* 居中对齐 */
+      /* 移除底部边框 */
+    }
+
+    .hero-body {
+      padding: 2rem 0; /* 内容区域内边距 */
+    }
+
+    .post-title {
+      margin-bottom: -0.7rem; /* 机器人图片和标题之间的距离 */
+    }
+
+    .publication-title {
+      font-size: 2.5rem; /* 标题字体大小 */
+      font-weight: bold; /* 粗体 */
+      margin-bottom: -1rem; /* 标题下边距 */
+      line-height: 1.2; /* 行高 */
+    }
+
+    .publication-authors {
+      font-size: 1.2rem; /* 作者信息字体大小 */
+      margin-bottom: -0.1rem; /* 作者信息下边距 */
+    }
+
+    .author-block {
+      margin-right: 0.5rem; /* 作者块右边距 */
+    }
+
+    .author-block a {
+      color: #667eea; /* 作者链接颜色 */
+      text-decoration: none; /* 无下划线 */
+    }
+
+    .author-block a:hover {
+      text-decoration: underline; /* 悬停时显示下划线 */
+    }
+
+    .publication-links {
+      margin-top: -0.2rem; /* 按钮区域上边距 */
+    }
+
+    .link-block {
+      margin: 0 0.2rem; /* 按钮块间距 */
+    }
+
+    .external-link {
+      background: #363636; /* 按钮背景色 */
+      color: white; /* 按钮文字颜色 */
+      /* border: 2px solid #363636; 按钮边框 */
+      padding: 0.6rem 1.2rem; /* 按钮内边距 */
+      border-radius: 25px; /* 圆角 */
+      text-decoration: none; /* 无下划线 */
+      display: inline-flex; /* 弹性布局 */
+      align-items: center; /* 垂直居中 */
+      gap: 0.4rem; /* 图标和文字间距 */
+      transition: all 0.3s ease; /* 过渡动画 */
+    }
+
+    .external-link:hover {
+      background: #4a4a4a; /* 悬停时背景色 */
+      border-color: #4a4a4a; /* 悬停时边框色 */
+      transform: translateY(-2px); /* 悬停时上移效果 */
+    }
+
+    /* Carousel Section - 轮播区域样式 */
+    .hero.is-light {
+      background: #f8f9fa; /* 浅灰色背景 */
+      color: #333; /* 深灰色文字 */
+      padding: 1rem 0rem 0rem 0rem; /* 上内边距1rem，下内边距0，左右0 */
+      margin-top: -3rem; /* 进一步向上移动整个灰色背景区域，从-2.5rem改为-4rem */
+      margin-left: 0rem; /* 左边距：调整左边宽度 */
+      margin-right: 0rem; /* 右边距：调整右边宽度 */
+      border-radius: 15px; /* 圆角：可选，让背景更美观 */
+      
+      /* 跨浏览器兼容性 */
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      -ms-border-radius: 15px;
+      -o-border-radius: 15px;
+      
+      /* 确保在不同浏览器中表现一致 */
+      display: block;
+      width: 100%;
+      position: relative;
+    }
+
+    .carousel {
+      margin: -2rem 0 -2.2rem 0; /* 进一步减少上边距，从-1rem改为-2rem */
+      position: relative; /* 相对定位，用于导航按钮 */
+      display: -webkit-flex; /* Safari兼容性 */
+      display: -moz-flex; /* Firefox兼容性 */
+      display: -ms-flex; /* IE兼容性 */
+      display: flex; /* 横向布局 */
+      gap: 0rem; /* 最小视频间距 */
+      -webkit-justify-content: center; /* Safari兼容性 */
+      -moz-justify-content: center; /* Firefox兼容性 */
+      -ms-justify-content: center; /* IE兼容性 */
+      justify-content: center; /* 居中对齐 */
+      -webkit-align-items: center; /* Safari兼容性 */
+      -moz-align-items: center; /* Firefox兼容性 */
+      -ms-align-items: center; /* IE兼容性 */
+      align-items: center; /* 垂直居中 */
+      overflow: visible; /* 允许按钮显示在容器外 */
+    }
+
+    .carousel .item {
+      text-align: center; /* 轮播项居中对齐 */
+      flex: 0 0 55%; /* 调整每个视频项宽度，当前为60% */
+      transition: transform 0.3s ease; /* 平滑过渡效果 */
+      margin: 0 -3rem; /* 负边距减少视频间距 */
+    }
+
+    /* 导航按钮样式 - 白色圆形按钮套三角形 */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ffffff; /* 纯白色背景 */
+      color: #333;
+      border: none; /* 移除边框 */
+      padding: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 50%; /* 圆形按钮 */
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100; /* 提高层级确保在最前面 */
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 增强阴影效果 */
+    }
+
+    .carousel-nav:hover {
+      background: #f0f0f0; /* 悬停时稍微变灰 */
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* 悬停时阴影更强 */
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-nav.prev {
+      left: -30px; /* 左按钮完全移出容器 */
+    }
+
+    .carousel-nav.next {
+      right: -30px; /* 右按钮完全移出容器 */
+    }
+
+    /* 轮播指示点样式 */
+    .carousel-dots {
+      margin-top: 20px;
+    }
+
+    .dot {
+      height: 12px;
+      width: 12px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background-color: #333;
+      transform: scale(1.3);
+    }
+
+    .dot:hover {
+      background-color: #666;
+      transform: scale(1.1);
+    }
+
+    .carousel video {
+      max-width: 80%; /* 调整视频宽度，当前为80% */
+      height: auto; /* 自动高度 */
+      border-radius: 8px; /* 圆角 */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+      margin: 0 -0.3rem; /* 负边距进一步减少视频间距 */
+    }
+
+    .subtitle {
+      font-size: 1.3rem; /* 副标题字体大小 */
+      margin-top: 1.5rem; /* 进一步减少上边距，从1.5rem减少到0.5rem */
+      color: #555; /* 副标题颜色 */
+    }
+
+    /* Section Styling - 内容区域样式 */
+    .section {
+      padding: 2rem 0; /* 减少内容区域内边距，从4rem减少到2rem */
+    }
+
+    .section h3 {
+      font-size: 2.2rem; /* 章节标题字体大小 */
+      color: #333; /* 标题颜色 */
+      text-align: center; /* 居中对齐 */
+      margin-bottom: 2rem; /* 下边距 */
+      font-weight: 700; /* 粗体 */
+    }
+
+    .content {
+      font-size: 1.1rem; /* 内容文字大小 */
+      line-height: 1.8; /* 行高 */
+      color: #444; /* 文字颜色 */
+    }
+
+    .publication-video {
+      margin: 2rem 0; /* 视频区域边距 */
+      text-align: center; /* 居中对齐 */
+    }
+
+    .publication-video iframe {
+      max-width: 55%; /* YouTube视频宽度缩小到80% */
+      border-radius: 15px; /* 圆角 */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    }
+
+    /* Video Comparison - 视频对比样式 */
+    #wrapper {
+      display: flex; /* 弹性布局 */
+      gap: -0.5rem; /* 视频间距 */
+      margin: 2rem 0; /* 外边距 */
+    }
+
+    #wrapper video {
+      max-width:40%; /* 对比视频宽度缩小到45% */
+      border-radius: 15px; /* 圆角 */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    }
+
+    .clear {
+      clear: both; /* 清除浮动 */
+    }
+
+    /* Citation - 引用样式 */
+    .citation {
+      background: #f8f9fa; /* 浅灰色背景 */
+      border: 1px solid #dee2e6; /* 边框 */
+      border-radius: 8px; /* 圆角 */
+      padding: 2rem; /* 内边距 */
+      font-family: 'Roboto Mono', monospace; /* 等宽字体 */
+      font-size: 0.9rem; /* 字体大小 */
+      line-height: 1.6; /* 行高 */
+      color: #333; /* 文字颜色 */
+      margin: 2rem 0; /* 外边距 */
+    }
+
+    /* Footer - 页脚样式 */
+    .footer {
+      background: #333; /* 深色背景 */
+      color: white; /* 白色文字 */
+      text-align: center; /* 居中对齐 */
+      padding: 2rem 0; /* 内边距 */
+      margin-top: 3rem; /* 上外边距 */
+    }
+
+    .footer a {
+      color: #667eea; /* 链接颜色 */
+      text-decoration: none; /* 无下划线 */
+    }
+
+    .footer a:hover {
+      text-decoration: underline; /* 悬停时显示下划线 */
+    }
+
+    /* Modern Table Styles - 现代化表格样式 */
+    .modern-table {
+      width: 100%;
+      max-width: 1000px;
+      margin: 2rem auto;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+    }
+
+    .modern-table thead {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .modern-table th {
+      padding: 1.2rem 1.5rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .modern-table td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #f1f3f4;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .modern-table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .modern-table tbody tr:hover {
+      background-color: #f8f9fa;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .modern-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .modern-table .formula-cell {
+      font-family: 'Courier New', 'Roboto Mono', monospace;
+      background-color: #f8f9fa;
+      border-radius: 6px;
+      padding: 0.8rem;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      word-break: break-word;
+      white-space: pre-line;
+    }
+
+    .modern-table .parameter-cell {
+      font-weight: 600;
+      color: #667eea;
+    }
+
+    .modern-table .value-cell {
+      color: #555;
+    }
+
+    .table-container {
+      margin: 2rem 0;
+      padding: 0 1rem;
+    }
+
+    .table-title {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #667eea;
+      display: inline-block;
+      width: 100%;
+    }
+
+    /* Responsive - 响应式设计 */
+    @media (max-width: 768px) {
+      .publication-title {
+        font-size: 2rem; /* 移动端标题字体大小 */
+      }
+      
+      .publication-authors {
+        font-size: 1rem; /* 移动端作者信息字体大小 */
+      }
+      
+      #wrapper {
+        flex-direction: column; /* 移动端垂直排列 */
+      }
+      
+      .external-link {
+        margin: 0.5rem 0; /* 移动端按钮边距 */
+      }
+
+      .modern-table {
+        font-size: 0.8rem;
+        margin: 1rem 0;
+      }
+
+      .modern-table th,
+      .modern-table td {
+        padding: 0.8rem 1rem;
+      }
+
+      .modern-table .formula-cell {
+        font-size: 0.75rem;
+        padding: 0.6rem;
+      }
+    }
+  </style>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 5;
+    const visibleSlides = 2;
+
+    function changeSlide(direction) {
+      currentSlide += direction;
+      
+      // 边界检查
+      if (currentSlide < 0) {
+        currentSlide = totalSlides - visibleSlides;
+      } else if (currentSlide > totalSlides - visibleSlides) {
+        currentSlide = 0;
+      }
+      
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      const carousel = document.getElementById('results-carousel');
+      const items = carousel.querySelectorAll('.item');
+      
+      // 隐藏所有视频
+      items.forEach((item, index) => {
+        if (index >= currentSlide && index < currentSlide + visibleSlides) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      
+      // 更新指示点状态
+      updateDots();
+    }
+
+    function updateDots() {
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, index) => {
+        dot.classList.remove('active');
+        if (index === currentSlide) {
+          dot.classList.add('active');
+        }
+      });
+    }
+
+    function goToSlide(n) {
+      currentSlide = n;
+      if (currentSlide >= totalSlides - visibleSlides + 1) {
+        currentSlide = totalSlides - visibleSlides + 1;
+      }
+      if (currentSlide < 0) {
+        currentSlide = 0;
+      }
+      updateCarousel();
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCarousel();
+    });
+
+    // 自动刷新功能（开发时使用）
+    // 取消注释下面的代码来启用自动刷新
+    /*
+    setInterval(function() {
+      location.reload();
+    }, 2000); // 每2秒刷新一次
+    */
+  </script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="post-title">
+              <img class="left" src="img/robot.png" width="100px" height="auto" alt="Robot Logo">
+            </h1><br />
+            <h1 class="title is-1 publication-title">
+              <span style="color: #F8CDAC;">O</span>ptimal-<span style="color: #F8CDAC;">H</span>orizon 
+              <span style="color: #F8CDAC;">S</span>ocial Robot Navigation in Heterogeneous Crowds
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                Anonymous Authors
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Anonymous Institution</span>
+            </div>
+
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="#">Jiamin Shi</a><sup>1,*</sup>,</span>
+              <span class="author-block">
+                <a href="#">Haolin Zhang</a><sup>1,*</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#">Shuo Sun</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#">Shitao Chen</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#">Jingmin Xin</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#">Nanning Zheng</a><sup>1&dagger;</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Xi'an Jiaotong University</span>
+            </div>
+
+            * Equal contribution &nbsp;&nbsp; &dagger; Corresponding author <br> -->
+
+            <div style="font-size: 30px; font-family: 'Comic Sans MS', cursive, sans-serif; font-weight: bold; text-transform: uppercase; color: pink; background: linear-gradient(135deg, #FFB6C1, #FF69B4); 
+            -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; 
+            letter-spacing: 3px; text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);">Submitted to IEEE ICRA 2026</div>
+            
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                <a href="Optimal-Horizon Social Robot Navigation in Heterogeneous Crowds.pdf"
+                   target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+                <span class="link-block">
+                  <a href="https://anonymous.4open.science/r/optimal-horizon-social-navigation-4F07/" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="video/real_world/2026ICRA.mp4" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-video"></i>
+                    </span>
+                    <span>Demo</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://anonymous.4open.science/r/optimal-horizon-social-navigation-4F07/social_transformer/data/train/gst_data_0817_0453_part_aa" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-database"></i>
+                    </span>
+                    <span>Data</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="./APPENDIX_.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Appendix</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <button class="carousel-nav prev" onclick="changeSlide(-1)">◀</button>
+          <button class="carousel-nav next" onclick="changeSlide(1)">▶</button>
+          
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="video/real_world/blur_case1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="video/real_world/blur_case2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="video/real_world/blur_case3.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="video/real_world/blur_case4.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="video/real_world/blur_case5.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        
+        <!-- 轮播指示点 -->
+        <div class="carousel-dots" style="text-align: center; margin-top: 20px;">
+          <span class="dot active" onclick="goToSlide(0)"></span>
+          <span class="dot" onclick="goToSlide(1)"></span>
+          <span class="dot" onclick="goToSlide(2)"></span>
+          <span class="dot" onclick="goToSlide(3)"></span>
+          <span class="dot" onclick="goToSlide(4)"></span>
+        </div>
+        
+        <h2 class="subtitle has-text-centered">
+          <strong>Our approach enables safe and efficient robot navigation in heterogeneous crowds by dynamically adjusting MPC optimal horizons through reinforcement learning and inferring pedestrian social attributes via spatio-temporal transformer.</strong>
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-3">Abstract</h3>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="publication-video">
+            <video width="560" height="315" controls>
+              <source src="video/real_world/2026ICRA.mp4" type="video/mp4">
+              您的浏览器不支持视频播放。
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="content has-text-justified">
+        Navigating social robots in dense, dynamic crowds is challenging due to environmental uncertainty and complex human-robot interactions. 
+        While Model Predictive Control (MPC) offers strong real-time performance, its reliance on a fixed prediction horizon limits adaptability to changing environments and social dynamics. Furthermore, most MPC approaches treat pedestrians as homogeneous obstacles, ignoring social heterogeneity and cooperative or adversarial interactions, which often causes the Frozen Robot Problem in partially observable real-world environments.
+        <br><br>
+        This paper proposes <strong>Optimal-Horizon Social Robot Navigation</strong>, a socially compliant MPC framework for heterogeneous crowds. The approach integrates interaction-aware state representation, adaptive horizon control via Reinforcement Learning (RL), and socially conditioned safety constraints. A pre-trained spatio-temporal Transformer infers pedestrian social attributes in real time, embedded into a heterogeneous state. The MPC dynamically adjusts its prediction horizon based on environment complexity and social context. Safety constraints adapt to pedestrian behaviors.
+        <br><br>
+        Results show that the approach achieves <strong>96.4% success rate</strong>, <strong>6.8% higher than the best baseline</strong>, with <strong>50% fewer collisions</strong> and <strong>2.33s faster navigation</strong>. With a timeout rate of only 0.8%, the framework demonstrates efficiency and safety, highlighting its feasibility in crowded, safety-critical environments.
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-3">Framework</h3>
+      <div class="image-section" style="text-align: center; margin: 20px 0;">
+        <!-- 框架图显示 - 使用PNG图片 -->
+        <div style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); overflow: hidden;">
+          <img src="img/Framework.png" alt="Optimal-Horizon Social Robot Navigation Framework" 
+               style="width: 70%; height: auto; max-width: 800px; display: block; margin: 0 auto;"
+               onerror="this.style.display='none'; document.getElementById('image-fallback').style.display='block';">
+          
+          <!-- 备用下载链接 -->
+          <div id="image-fallback" style="display: none; padding: 40px; background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 8px;">
+            <p style="margin-bottom: 20px; color: #666;">图片加载失败，请点击下方按钮下载查看：</p>
+            <a href="img/Framework.pdf" class="external-link button is-normal is-rounded is-dark" style="text-decoration: none;">
+              <span class="icon">
+                <i class="fas fa-download"></i>
+              </span>
+              <span>下载框架图PDF</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="content has-text-justified">
+        <p>To address social navigation challenges in dense and dynamic environments, this paper proposes the <strong>Optimal-Horizon Social Robot Navigation</strong> framework. The framework explicitly models heterogeneous social interactions, enabling the robot to collaborate with cooperative pedestrians while cautiously avoiding non-cooperative ones, mitigating the Frozen Robot Problem under partial observability. It comprises three interrelated components: <strong>Stage I - Spatio-Temporal Transformer for Pedestrian Cooperation Prediction</strong> that infers cooperation attributes from pedestrian trajectories, <strong>Stage II - Reinforcement Learning for Dynamic Horizon Decision</strong> that determines optimal MPC prediction horizon based on environment complexity, and <strong>Stage III - Optimal-Horizon MPC with Social Awareness</strong> that generates collision-free trajectories with socially-adapted safety constraints.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-3">Experimental Setup</h3>
+      <div class="content has-text-justified">
+        <h4>Simulation Environment</h4>
+        <p>
+          We extend the CrowdNav environment to a realistic 2D pedestrian simulation. The robot is equipped with a limited 5m circular sensing range and a 360° field of view, instead of assuming full observability. To reflect real-world uncertainty, pedestrians may be partially occluded. Social diversity is introduced by modeling cooperative pedestrians whose trajectories adapt to the robot, and non-cooperative pedestrians whose behaviors remain unaffected and non-visible to the robot. All pedestrians follow the ORCA strategy under speed and curvature constraints.
+        </p>
+        
+        <h4>Environment Parameters</h4>
+        <div class="table-container">
+          <div class="table-title">Environment Configuration Parameters</div>
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="parameter-cell">Environment</td>
+                <td class="value-cell">CrowdNav</td>
+                <td class="value-cell">Extended 2D pedestrian simulation with limited sensing range</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Robot Sensing Range</td>
+                <td class="value-cell">5m</td>
+                <td class="value-cell">Circular sensing range with 360° field of view</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Human Population</td>
+                <td class="value-cell">20 pedestrians</td>
+                <td class="value-cell">Varying cooperation ratios (0, 5, 10 cooperative pedestrians)</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Robot Kinematics</td>
+                <td class="value-cell">Holonomic</td>
+                <td class="value-cell">Maximum velocity of 1.0 m/s in both x and y directions</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Safety Distance</td>
+                <td class="value-cell">0.5m</td>
+                <td class="value-cell">Minimum distance around robot and other agents</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Prediction Horizon</td>
+                <td class="value-cell">[1, 2, 3, 4, 5, 6, 7, 8]</td>
+                <td class="value-cell">Dynamic selection from available horizon steps</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <h4>Training Configuration</h4>
+        <div class="table-container">
+          <div class="table-title">Training Configuration Parameters</div>
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="parameter-cell">Algorithm</td>
+                <td class="value-cell">PPO</td>
+                <td class="value-cell">Proximal Policy Optimization</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Learning Rate</td>
+                <td class="value-cell">4e-5</td>
+                <td class="value-cell">PPO learning rate with RMSprop optimizer</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">PPO Epochs</td>
+                <td class="value-cell">5</td>
+                <td class="value-cell">Policy update epochs</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Clip Parameter</td>
+                <td class="value-cell">0.2</td>
+                <td class="value-cell">PPO clipping parameter</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Value Loss Coef</td>
+                <td class="value-cell">0.5</td>
+                <td class="value-cell">Value function loss weight</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Entropy Coef</td>
+                <td class="value-cell">0.02</td>
+                <td class="value-cell">Entropy regularization</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Discount Factor</td>
+                <td class="value-cell">0.99</td>
+                <td class="value-cell">For reward calculation</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Total Steps</td>
+                <td class="value-cell">30M</td>
+                <td class="value-cell">Environment interaction steps</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Parallel Processes</td>
+                <td class="value-cell">64</td>
+                <td class="value-cell">Number of parallel environments</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Batch Size</td>
+                <td class="value-cell">64</td>
+                <td class="value-cell">With 64 parallel processes</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Mini-batch Size</td>
+                <td class="value-cell">8</td>
+                <td class="value-cell">PPO mini-batch size</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Sequence Length</td>
+                <td class="value-cell">8</td>
+                <td class="value-cell">Input sequence length</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Save Interval</td>
+                <td class="value-cell">1M</td>
+                <td class="value-cell">Model checkpoint frequency</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Action Space</td>
+                <td class="value-cell">8</td>
+                <td class="value-cell">Dynamic prediction horizon options (1-8)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <h4>MPC-CBF Parameters</h4>
+        <div class="table-container">
+          <div class="table-title">MPC-CBF Configuration Parameters</div>
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="parameter-cell">State Cost Matrix Q</td>
+                <td class="formula-cell">[[15, 0], [0, 15]]</td>
+                <td class="value-cell">Weighting matrix for state variables</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Control Cost Matrix R</td>
+                <td class="formula-cell">[1, 1]</td>
+                <td class="value-cell">Weighting matrix for control inputs</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Terminal Cost Matrix P</td>
+                <td class="formula-cell">[[3, 0], [0, 3]]</td>
+                <td class="value-cell">Weighting matrix for terminal state</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Cooperation Modes</td>
+                <td class="value-cell">3 modes</td>
+                <td class="value-cell">Cooperative (weight 0.2), Non-cooperative (weight 1.0), None (weight None)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <h4>Reward Function</h4>
+        <p>
+          The reward function balances safety, efficiency, and social awareness. In addition to standard terminal, potential, and kinematic rewards, two task-specific signals are introduced: a visibility social reward incorporating predicted cooperation from Stage I, and a prediction horizon reward aligning the adaptive MPC horizon in Stage II.
+        </p>
+        
+        <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 16px; margin: 20px 0;">
+          <strong>r<sub>t</sub> = r<sub>t</sub><sup>term</sup> + r<sub>t</sub><sup>pot</sup> + r<sub>t</sub><sup>kin</sup> + r<sub>t</sub><sup>horizon</sup> + r<sub>t</sub><sup>vis_social</sup></strong>
+        </p>
+        
+        <div class="table-container">
+          <div class="table-title">Reward Function Components</div>
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Reward Component</th>
+                <th>Formula</th>
+                <th>Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="parameter-cell">Terminal Reward</td>
+                <td class="formula-cell">
+                  r<sub>t</sub><sup>term</sup> = <br>
+                  +10, if goal reached<br>
+                  -20, if collision or timeout<br>
+                  0, otherwise
+                </td>
+                <td class="value-cell">Fixed values</td>
+                <td class="value-cell">Unified terminal reward for goal achievement, collisions, and timeouts</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Potential Reward</td>
+                <td class="formula-cell">
+                  r<sub>t</sub><sup>pot</sup> = -λ<sub>pot</sub>(Φ<sub>t</sub> - Φ<sub>t-1</sub>)<br>
+                  where Φ<sub>t</sub> = ||p<sub>t</sub><sup>r</sup> - g||
+                </td>
+                <td class="value-cell">λ<sub>pot</sub> = 2</td>
+                <td class="value-cell">Incentivizes efficient progress toward the goal along progressively shorter paths</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Kinematic Reward</td>
+                <td class="formula-cell">
+                  r<sub>t</sub><sup>kin</sup> = -λ<sub>r</sub>w<sub>t</sub><sup>2</sup> - λ<sub>v</sub>max(0, -v<sub>t</sub>)
+                </td>
+                <td class="value-cell">λ<sub>r</sub> = 5<br>λ<sub>v</sub> = 2</td>
+                <td class="value-cell">Discourages aggressive or backward motions for smooth navigation</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Horizon Reward</td>
+                <td class="formula-cell">
+                  r<sub>t</sub><sup>horizon</sup> = -λ<sub>h</sub>(h<sub>max</sub> - h<sub>t</sub>)
+                </td>
+                <td class="value-cell">λ<sub>h</sub> = 0.1<br>h<sub>max</sub> = 8</td>
+                <td class="value-cell">Encourages appropriate MPC prediction horizon selection for efficiency</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Visibility Social Reward</td>
+                <td class="formula-cell" style="font-size: 0.8rem; line-height: 1.3;">
+                  r<sub>t</sub><sup>vis_social</sup> = <br>
+                  λ<sub>high</sub>·h<sub>t</sub><sup>η<sub>high</sub></sup>·ρ<sub>no-coop</sub>, if ρ<sub>no-coop</sub> > 0.5<br>
+                  λ<sub>low</sub>·h<sub>t</sub><sup>η<sub>low</sub></sup>·(1-ρ<sub>no-coop</sub>), otherwise
+                </td>
+                <td class="value-cell" style="font-size: 0.85rem; line-height: 1.4;">
+                  λ<sub>high</sub> = 0.05<br>
+                  λ<sub>low</sub> = 0.01<br>
+                  η<sub>high</sub> = 1.2<br>
+                  η<sub>low</sub> = 0.8<br>
+                  threshold = 0.5
+                </td>
+                <td class="value-cell" style="font-size: 0.85rem; line-height: 1.4;">
+                  Rewards considering cooperation of visible pedestrians, where ρ<sub>no-coop</sub> is the fraction of non-cooperative pedestrians
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <h5>Key Design Principles:</h5>
+        <ul>
+          <li><strong>Safety:</strong> Terminal and kinematic rewards ensure collision avoidance and smooth motion</li>
+          <li><strong>Efficiency:</strong> Potential and horizon rewards guide the robot toward the goal with optimal planning horizons</li>
+          <li><strong>Social Awareness:</strong> Visibility social reward adapts behavior based on pedestrian cooperation attributes</li>
+          <li><strong>Adaptive Planning:</strong> Horizon reward balances efficiency with social compliance through dynamic MPC horizon selection</li>
+        </ul>
+        
+        <h4>Evaluation Metrics</h4>
+        <p>
+          Performance is assessed across scenarios with low, medium, and high interaction levels, characterized by varying ratios of cooperative and non-cooperative pedestrians. Each model is tested on 250 random unseen cases and evaluated based on success rate (SR%), collision rate (CR%), timeout rate (OR%), average navigation time (ANT), average trajectory length (ATL), and average intrusion ratio (AIR%).
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-3">Simulation Results</h3>
+      <div class="content has-text-justified">
+        <p>
+          Our approach demonstrates superior performance across different interaction scenarios in simulation environments. 
+          The following videos showcase the robot's navigation behavior in low, medium, and high interaction scenarios, 
+          highlighting the effectiveness of our dynamic horizon decision and social awareness mechanisms.
+        </p>
+      </div>
+
+      <div class="content has-text-justified">
+        <h4 class="has-text-centered">Low Interaction Scenario</h4>
+        <div style="text-align: center; margin: 20px 0;">
+          <video width="80%" height="auto" controls style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+            <source src="video/simulation/low_inter_scen.mp4" type="video/mp4">
+            您的浏览器不支持视频播放。
+          </video>
+        </div>
+        <p style="text-align: center; font-style: italic; color: #666; margin-top: 10px;">
+          In low interaction scenarios with 0 cooperative pedestrians and 20 non-cooperative pedestrians, 
+          our method demonstrates efficient navigation while maintaining safe distances from all pedestrians.
+        </p>
+      </div>
+
+      <div class="content has-text-justified">
+        <h4 class="has-text-centered">Medium Interaction Scenario</h4>
+        <div style="text-align: center; margin: 20px 0;">
+          <video width="80%" height="auto" controls style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+            <source src="video/simulation/mid_inter_scen.mp4" type="video/mp4">
+            您的浏览器不支持视频播放。
+          </video>
+        </div>
+        <p style="text-align: center; font-style: italic; color: #666; margin-top: 10px;">
+          In medium interaction scenarios with 5 cooperative pedestrians and 15 non-cooperative pedestrians, 
+          the robot adapts its behavior to collaborate with cooperative pedestrians while avoiding non-cooperative ones.
+        </p>
+      </div>
+
+      <div class="content has-text-justified">
+        <h4 class="has-text-centered">High Interaction Scenario</h4>
+        <div style="text-align: center; margin: 20px 0;">
+          <video width="80%" height="auto" controls style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+            <source src="video/simulation/high_inter_scen.mp4" type="video/mp4">
+            您的浏览器不支持视频播放。
+          </video>
+        </div>
+        <p style="text-align: center; font-style: italic; color: #666; margin-top: 10px;">
+          In high interaction scenarios with 10 cooperative pedestrians and 10 non-cooperative pedestrians, 
+          our method achieves optimal navigation by dynamically adjusting prediction horizons and leveraging social cooperation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h3 class="title is-3">Appendix: Spatio-Temporal Transformer Details</h3>
+      <div class="content has-text-justified">
+        <p>
+          This section presents comprehensive training results for the Spatio-Temporal Transformer used for pedestrian cooperation prediction. The Spatio-Temporal Transformer model demonstrates strong performance in classifying cooperative vs. non-cooperative pedestrian behaviors across diverse crowd scenarios.
+        </p>
+        
+        <h4>Spatio-Temporal Transformer Model Configuration</h4>
+        <div class="table-container">
+          <div class="table-title">Model Architecture and Training Setup</div>
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="parameter-cell">Model Embedding Dimension</td>
+                <td class="value-cell">128</td>
+                <td class="value-cell">Model embedding dimension (d_model)</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Node Attention Heads</td>
+                <td class="value-cell">8</td>
+                <td class="value-cell">Number of node attention heads</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Edge Attention Heads</td>
+                <td class="value-cell">4</td>
+                <td class="value-cell">Number of edge attention heads</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Transformer Layers</td>
+                <td class="value-cell">3</td>
+                <td class="value-cell">Number of transformer layers</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Feedforward Dimension</td>
+                <td class="value-cell">512</td>
+                <td class="value-cell">Feedforward network dimension</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Dropout Rate</td>
+                <td class="value-cell">0.1</td>
+                <td class="value-cell">Dropout regularization rate</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Training Epochs</td>
+                <td class="value-cell">2000</td>
+                <td class="value-cell">Total training epochs</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Batch Size</td>
+                <td class="value-cell">4096</td>
+                <td class="value-cell">Training batch size</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Learning Rate</td>
+                <td class="value-cell">0.001</td>
+                <td class="value-cell">Optimizer learning rate</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Sequence Length</td>
+                <td class="value-cell">8</td>
+                <td class="value-cell">Input sequence length</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Training Performance Evolution</h4>
+        <div class="table-container">
+          <div class="table-title">Accuracy and ROC AUC Improvements</div>
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Epoch</th>
+                <th>Train Accuracy</th>
+                <th>Test Accuracy</th>
+                <th>ROC AUC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="parameter-cell">940</td>
+                <td class="value-cell">90.62%</td>
+                <td class="value-cell">89.99%</td>
+                <td class="value-cell">97.69%</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">1000</td>
+                <td class="value-cell">91.07%</td>
+                <td class="value-cell">90.40%</td>
+                <td class="value-cell">97.92%</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">1200</td>
+                <td class="value-cell">92.29%</td>
+                <td class="value-cell">91.74%</td>
+                <td class="value-cell">98.35%</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">1400</td>
+                <td class="value-cell">93.15%</td>
+                <td class="value-cell">92.50%</td>
+                <td class="value-cell">98.73%</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">1560</td>
+                <td class="value-cell">93.71%</td>
+                <td class="value-cell">93.14%</td>
+                <td class="value-cell">98.91%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Error Analysis and Limitations</h4>
+        <div class="table-container">
+          <div class="table-title">Common Failure Modes</div>
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Error Type</th>
+                <th>Frequency</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="parameter-cell">False Positives (Coop)</td>
+                <td class="value-cell">2.8%</td>
+                <td class="value-cell">Misclassified as cooperative</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">False Negatives (Coop)</td>
+                <td class="value-cell">5.3%</td>
+                <td class="value-cell">Missed cooperative behavior</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">High Density Scenarios</td>
+                <td class="value-cell">+15% error</td>
+                <td class="value-cell">Crowded environments</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Partial Observation</td>
+                <td class="value-cell">+8% error</td>
+                <td class="value-cell">Limited visibility</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Long-term Prediction</td>
+                <td class="value-cell">Limited</td>
+                <td class="value-cell">Beyond 8 steps</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container">
+      <h3 class="title is-3">Citation</h3>
+      <div class="citation">
+        <pre><code>@ARTICLE{optimal_horizon_social_navigation,
+  author={Anonymous Authors},
+  journal={Submitted to IEEE ICRA 2026}, 
+  title={Optimal-Horizon Social Robot Navigation in Heterogeneous Crowds}, 
+  year={2025},
+  note={Under Review}
+  <!-- author={Shi, Jiamin and Zhang, Haolin and Sun, Shuo and Chen, Shitao and Xin, Jingmin and Zheng, Nanning}, --></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://anonymous.4open.science/r/optimal-horizon-social-navigation-4F07/">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="icon-link" href="https://anonymous.4open.science/r/optimal-horizon-social-navigation-4F07/">
+          <i class="fab fa-github"></i>
+        </a>
+        <br>
+        website template from <a href="https://selen-suyue.github.io/MBApage/">MBA Project</a>
+        <br>
+        &copy; 2025 Optimal-Horizon Social Robot Navigation. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
