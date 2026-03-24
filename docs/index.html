@@ -51,119 +51,134 @@
 
     /* Hero Section - 头部区域样式 */
     .hero {
-      background: #ffffff; /* 白色背景 */
-      color: #333; /* 深灰色文字 */
-      padding: 2rem 0; /* 减少上下内边距，从4rem减少到2rem */
-      text-align: center; /* 居中对齐 */
-      /* 移除底部边框 */
+      background: #ffffff;
+      color: #333;
+      padding: 2rem 0;
+      text-align: center;
     }
 
     .hero-body {
-      padding: 2rem 0; /* 内容区域内边距 */
+      padding: 2rem 0;
     }
 
     .post-title {
-      margin-bottom: -0.7rem; /* 机器人图片和标题之间的距离 */
+      margin-bottom: -0.7rem;
     }
 
     .publication-title {
-      font-size: 2.5rem; /* 标题字体大小 */
-      font-weight: bold; /* 粗体 */
-      margin-bottom: -1rem; /* 标题下边距 */
-      line-height: 1.2; /* 行高 */
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: -1rem;
+      line-height: 1.2;
     }
 
     .publication-authors {
-      font-size: 1.2rem; /* 作者信息字体大小 */
-      margin-bottom: -0.1rem; /* 作者信息下边距 */
+      font-size: 1.2rem;
+      margin-bottom: -0.1rem;
     }
 
     .author-block {
-      margin-right: 0.5rem; /* 作者块右边距 */
+      margin-right: 0.5rem;
     }
 
     .author-block a {
-      color: #667eea; /* 作者链接颜色 */
-      text-decoration: none; /* 无下划线 */
+      color: #667eea;
+      text-decoration: none;
     }
 
     .author-block a:hover {
-      text-decoration: underline; /* 悬停时显示下划线 */
+      text-decoration: underline;
     }
 
     .publication-links {
-      margin-top: -0.2rem; /* 按钮区域上边距 */
+      margin-top: -0.2rem;
     }
 
     .link-block {
-      margin: 0 0.2rem; /* 按钮块间距 */
+      margin: 0 0.2rem;
     }
 
     .external-link {
-      background: #363636; /* 按钮背景色 */
-      color: white; /* 按钮文字颜色 */
-      /* border: 2px solid #363636; 按钮边框 */
-      padding: 0.6rem 1.2rem; /* 按钮内边距 */
-      border-radius: 25px; /* 圆角 */
-      text-decoration: none; /* 无下划线 */
-      display: inline-flex; /* 弹性布局 */
-      align-items: center; /* 垂直居中 */
-      gap: 0.4rem; /* 图标和文字间距 */
-      transition: all 0.3s ease; /* 过渡动画 */
+      background: #363636;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.3s ease;
     }
 
     .external-link:hover {
-      background: #4a4a4a; /* 悬停时背景色 */
-      border-color: #4a4a4a; /* 悬停时边框色 */
-      transform: translateY(-2px); /* 悬停时上移效果 */
+      background: #4a4a4a;
+      border-color: #4a4a4a;
+      transform: translateY(-2px);
     }
 
     /* Carousel Section - 轮播区域样式 */
     .hero.is-light {
-      background: #f8f9fa; /* 浅灰色背景 */
-      color: #333; /* 深灰色文字 */
-      padding: 1rem 0rem 0rem 0rem; /* 上内边距1rem，下内边距0，左右0 */
-      margin-top: -3rem; /* 进一步向上移动整个灰色背景区域，从-2.5rem改为-4rem */
-      margin-left: 0rem; /* 左边距：调整左边宽度 */
-      margin-right: 0rem; /* 右边距：调整右边宽度 */
-      border-radius: 15px; /* 圆角：可选，让背景更美观 */
-      
-      /* 跨浏览器兼容性 */
+      background: #f8f9fa;
+      color: #333;
+      padding: 1rem 0rem 0rem 0rem;
+      margin-top: -3rem;
+      margin-left: 0rem;
+      margin-right: 0rem;
+      border-radius: 15px;
       -webkit-border-radius: 15px;
       -moz-border-radius: 15px;
       -ms-border-radius: 15px;
       -o-border-radius: 15px;
-      
-      /* 确保在不同浏览器中表现一致 */
       display: block;
       width: 100%;
       position: relative;
     }
 
     .carousel {
-      margin: -2rem 0 -2.2rem 0; /* 进一步减少上边距，从-1rem改为-2rem */
-      position: relative; /* 相对定位，用于导航按钮 */
-      display: -webkit-flex; /* Safari兼容性 */
-      display: -moz-flex; /* Firefox兼容性 */
-      display: -ms-flex; /* IE兼容性 */
-      display: flex; /* 横向布局 */
-      gap: 0rem; /* 最小视频间距 */
-      -webkit-justify-content: center; /* Safari兼容性 */
-      -moz-justify-content: center; /* Firefox兼容性 */
-      -ms-justify-content: center; /* IE兼容性 */
-      justify-content: center; /* 居中对齐 */
-      -webkit-align-items: center; /* Safari兼容性 */
-      -moz-align-items: center; /* Firefox兼容性 */
-      -ms-align-items: center; /* IE兼容性 */
-      align-items: center; /* 垂直居中 */
-      overflow: visible; /* 允许按钮显示在容器外 */
+      margin: -2rem 0 -2.2rem 0;
+      position: relative;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: flex;
+      gap: 1.5rem;
+      -webkit-justify-content: center;
+      -moz-justify-content: center;
+      -ms-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      -moz-align-items: center;
+      -ms-align-items: center;
+      align-items: center;
+      overflow: visible;
     }
 
     .carousel .item {
-      text-align: center; /* 轮播项居中对齐 */
-      flex: 0 0 55%; /* 调整每个视频项宽度，当前为60% */
-      transition: transform 0.3s ease; /* 平滑过渡效果 */
-      margin: 0 -3rem; /* 负边距减少视频间距 */
+      text-align: center;
+      flex: 0 0 42%;
+      transition: transform 0.3s ease;
+      margin: 0;
+    }
+
+    .video-card {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      background: #000;
+    }
+
+    .video-card iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 10px;
     }
 
     /* 导航按钮样式 - 白色圆形按钮套三角形 */
@@ -171,36 +186,36 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: #ffffff; /* 纯白色背景 */
+      background: #ffffff;
       color: #333;
-      border: none; /* 移除边框 */
+      border: none;
       padding: 12px;
       cursor: pointer;
       font-size: 18px;
       font-weight: bold;
-      border-radius: 50%; /* 圆形按钮 */
+      border-radius: 50%;
       width: 40px;
       height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 100; /* 提高层级确保在最前面 */
+      z-index: 100;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 增强阴影效果 */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .carousel-nav:hover {
-      background: #f0f0f0; /* 悬停时稍微变灰 */
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* 悬停时阴影更强 */
+      background: #f0f0f0;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
       transform: translateY(-50%) scale(1.1);
     }
 
     .carousel-nav.prev {
-      left: -30px; /* 左按钮完全移出容器 */
+      left: -30px;
     }
 
     .carousel-nav.next {
-      right: -30px; /* 右按钮完全移出容器 */
+      right: -30px;
     }
 
     /* 轮播指示点样式 */
@@ -229,96 +244,105 @@
       transform: scale(1.1);
     }
 
-    .carousel video {
-      max-width: 80%; /* 调整视频宽度，当前为80% */
-      height: auto; /* 自动高度 */
-      border-radius: 8px; /* 圆角 */
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 阴影效果 */
-      margin: 0 -0.3rem; /* 负边距进一步减少视频间距 */
-    }
-
     .subtitle {
-      font-size: 1.3rem; /* 副标题字体大小 */
-      margin-top: 1.5rem; /* 进一步减少上边距，从1.5rem减少到0.5rem */
-      color: #555; /* 副标题颜色 */
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+      color: #555;
     }
 
     /* Section Styling - 内容区域样式 */
     .section {
-      padding: 2rem 0; /* 减少内容区域内边距，从4rem减少到2rem */
+      padding: 2rem 0;
     }
 
     .section h3 {
-      font-size: 2.2rem; /* 章节标题字体大小 */
-      color: #333; /* 标题颜色 */
-      text-align: center; /* 居中对齐 */
-      margin-bottom: 2rem; /* 下边距 */
-      font-weight: 700; /* 粗体 */
+      font-size: 2.2rem;
+      color: #333;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 700;
     }
 
     .content {
-      font-size: 1.1rem; /* 内容文字大小 */
-      line-height: 1.8; /* 行高 */
-      color: #444; /* 文字颜色 */
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #444;
     }
 
     .publication-video {
-      margin: 2rem 0; /* 视频区域边距 */
-      text-align: center; /* 居中对齐 */
+      margin: 2rem 0;
+      text-align: center;
     }
 
-    .publication-video iframe {
-      max-width: 55%; /* YouTube视频宽度缩小到80% */
-      border-radius: 15px; /* 圆角 */
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    .main-video-wrapper {
+      position: relative;
+      width: 55%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-top: 30.94%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      background: #000;
+    }
+
+    .main-video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 15px;
     }
 
     /* Video Comparison - 视频对比样式 */
     #wrapper {
-      display: flex; /* 弹性布局 */
-      gap: -0.5rem; /* 视频间距 */
-      margin: 2rem 0; /* 外边距 */
+      display: flex;
+      gap: -0.5rem;
+      margin: 2rem 0;
     }
 
     #wrapper video {
-      max-width:40%; /* 对比视频宽度缩小到45% */
-      border-radius: 15px; /* 圆角 */
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+      max-width: 40%;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     .clear {
-      clear: both; /* 清除浮动 */
+      clear: both;
     }
 
     /* Citation - 引用样式 */
     .citation {
-      background: #f8f9fa; /* 浅灰色背景 */
-      border: 1px solid #dee2e6; /* 边框 */
-      border-radius: 8px; /* 圆角 */
-      padding: 2rem; /* 内边距 */
-      font-family: 'Roboto Mono', monospace; /* 等宽字体 */
-      font-size: 0.9rem; /* 字体大小 */
-      line-height: 1.6; /* 行高 */
-      color: #333; /* 文字颜色 */
-      margin: 2rem 0; /* 外边距 */
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 2rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #333;
+      margin: 2rem 0;
     }
 
     /* Footer - 页脚样式 */
     .footer {
-      background: #333; /* 深色背景 */
-      color: white; /* 白色文字 */
-      text-align: center; /* 居中对齐 */
-      padding: 2rem 0; /* 内边距 */
-      margin-top: 3rem; /* 上外边距 */
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
     }
 
     .footer a {
-      color: #667eea; /* 链接颜色 */
-      text-decoration: none; /* 无下划线 */
+      color: #667eea;
+      text-decoration: none;
     }
 
     .footer a:hover {
-      text-decoration: underline; /* 悬停时显示下划线 */
+      text-decoration: underline;
     }
 
     /* Modern Table Styles - 现代化表格样式 */
@@ -410,19 +434,19 @@
     /* Responsive - 响应式设计 */
     @media (max-width: 768px) {
       .publication-title {
-        font-size: 2rem; /* 移动端标题字体大小 */
+        font-size: 2rem;
       }
       
       .publication-authors {
-        font-size: 1rem; /* 移动端作者信息字体大小 */
+        font-size: 1rem;
       }
       
       #wrapper {
-        flex-direction: column; /* 移动端垂直排列 */
+        flex-direction: column;
       }
       
       .external-link {
-        margin: 0.5rem 0; /* 移动端按钮边距 */
+        margin: 0.5rem 0;
       }
 
       .modern-table {
@@ -439,6 +463,19 @@
         font-size: 0.75rem;
         padding: 0.6rem;
       }
+
+      .carousel {
+        gap: 1rem;
+      }
+
+      .carousel .item {
+        flex: 0 0 90%;
+      }
+
+      .main-video-wrapper {
+        width: 90%;
+        padding-top: 50.625%;
+      }
     }
   </style>
 
@@ -450,7 +487,6 @@
     function changeSlide(direction) {
       currentSlide += direction;
       
-      // 边界检查
       if (currentSlide < 0) {
         currentSlide = totalSlides - visibleSlides;
       } else if (currentSlide > totalSlides - visibleSlides) {
@@ -464,7 +500,6 @@
       const carousel = document.getElementById('results-carousel');
       const items = carousel.querySelectorAll('.item');
       
-      // 隐藏所有视频
       items.forEach((item, index) => {
         if (index >= currentSlide && index < currentSlide + visibleSlides) {
           item.style.display = 'block';
@@ -473,7 +508,6 @@
         }
       });
       
-      // 更新指示点状态
       updateDots();
     }
 
@@ -489,8 +523,8 @@
 
     function goToSlide(n) {
       currentSlide = n;
-      if (currentSlide >= totalSlides - visibleSlides + 1) {
-        currentSlide = totalSlides - visibleSlides + 1;
+      if (currentSlide > totalSlides - visibleSlides) {
+        currentSlide = totalSlides - visibleSlides;
       }
       if (currentSlide < 0) {
         currentSlide = 0;
@@ -498,17 +532,14 @@
       updateCarousel();
     }
 
-    // 页面加载完成后初始化
     document.addEventListener('DOMContentLoaded', function() {
       updateCarousel();
     });
 
-    // 自动刷新功能（开发时使用）
-    // 取消注释下面的代码来启用自动刷新
     /*
     setInterval(function() {
       location.reload();
-    }, 2000); // 每2秒刷新一次
+    }, 2000);
     */
   </script>
 </head>
@@ -604,38 +635,72 @@
           <button class="carousel-nav next" onclick="changeSlide(1)">▶</button>
           
           <div class="item">
-            <video poster="" autoplay muted loop height="100%">
-              <source src="video/real_world/Case 1.mp4" type="video/mp4">
-            </video>
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/Gn1b2_BDeRE?rel=0&playsinline=1&v=2"
+                title="Case 1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
+
           <div class="item">
-            <video poster="" autoplay muted loop height="100%">
-              <source src="video/real_world/Case 2.mp4" type="video/mp4">
-            </video>
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/c7pkxH3eN-c"
+                title="Case 2"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
+
           <div class="item">
-            <video poster="" autoplay muted loop height="100%">
-              <source src="video/real_world/Case 3.mp4" type="video/mp4">
-            </video>
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/HGi9_TkEmt0"
+                title="Case 3"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
+
           <div class="item">
-            <video poster="" autoplay muted loop height="100%">
-              <source src="video/real_world/Case 4.mp4" type="video/mp4">
-            </video>
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/S0CLQIW7GwM"
+                title="Case 4"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
+
           <div class="item">
-            <video poster="" autoplay muted loop height="100%">
-              <source src="video/real_world/Case 5.mp4" type="video/mp4">
-            </video>
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/VY8P8_vBaQo"
+                title="Case 5"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
+
           <div class="item">
-            <video poster="" autoplay muted loop height="100%">
-              <source src="video/real_world/Case 6.mp4" type="video/mp4">
-            </video>
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/ay1lVlHjpU8"
+                title="Case 6"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
         </div>
         
-        <!-- 轮播指示点 -->
         <div class="carousel-dots" style="text-align: center; margin-top: 20px;">
           <span class="dot active" onclick="goToSlide(0)"></span>
           <span class="dot" onclick="goToSlide(1)"></span>
@@ -658,10 +723,14 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <div class="publication-video">
-            <video width="560" height="315" controls>
-              <source src="video/real_world/2026ICRA.mp4" type="video/mp4">
-              您的浏览器不支持视频播放。
-            </video>
+            <div class="main-video-wrapper">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/40AMmCSlf0E"
+                title="Demo video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
         </div>
       </div>
@@ -679,13 +748,11 @@
     <div class="container">
       <h3 class="title is-3">Framework</h3>
       <div class="image-section" style="text-align: center; margin: 20px 0;">
-        <!-- 框架图显示 - 使用PNG图片 -->
         <div style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); overflow: hidden;">
           <img src="img/Framework.png" alt="Optimal-Horizon Social Robot Navigation Framework" 
                style="width: 70%; height: auto; max-width: 800px; display: block; margin: 0 auto;"
                onerror="this.style.display='none'; document.getElementById('image-fallback').style.display='block';">
           
-          <!-- 备用下载链接 -->
           <div id="image-fallback" style="display: none; padding: 40px; background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 8px;">
             <p style="margin-bottom: 20px; color: #666;">图片加载失败，请点击下方按钮下载查看：</p>
             <a href="img/Framework.pdf" class="external-link button is-normal is-rounded is-dark" style="text-decoration: none;">
@@ -916,7 +983,7 @@
                 <td class="parameter-cell">Potential Reward</td>
                 <td class="formula-cell">
                   r<sub>t</sub><sup>pot</sup> = -λ<sub>pot</sub>(Φ<sub>t</sub> - Φ<sub>t-1</sub>)<br>
-                  where Φ<sub>t</sub> = ||p<sub>t</sub><sup>r</sup> - g||
+                  where Φ<sub>t</sub> = ||p<sub>t</sub><sup>r</sup> - g|| 
                 </td>
                 <td class="value-cell">λ<sub>pot</sub> = 2</td>
                 <td class="value-cell">Incentivizes efficient progress toward the goal along progressively shorter paths</td>
@@ -1005,10 +1072,16 @@
       <div class="content has-text-justified">
         <h4 class="has-text-centered">Medium Interaction Scenario</h4>
         <div style="text-align: center; margin: 20px 0;">
-          <video width="80%" height="auto" controls style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-            <source src="video/simulation/mid_inter_scen.mp4" type="video/mp4">
-            您的浏览器不支持视频播放。
-          </video>
+          <div style="position:relative;padding-top:56.25%;height:0;overflow:hidden;border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); width: 80%; margin: 0 auto;">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/DyNxkzFxyPA"
+              title="Medium Interaction Scenario"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
         <p style="text-align: center; font-style: italic; color: #666; margin-top: 10px;">
           In medium interaction scenarios with 5 cooperative pedestrians and 15 non-cooperative pedestrians, 
@@ -1019,10 +1092,16 @@
       <div class="content has-text-justified">
         <h4 class="has-text-centered">High Interaction Scenario</h4>
         <div style="text-align: center; margin: 20px 0;">
-          <video width="80%" height="auto" controls style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-            <source src="video/simulation/high_inter_scen.mp4" type="video/mp4">
-            您的浏览器不支持视频播放。
-          </video>
+          <div style="position:relative;padding-top:56.25%;height:0;overflow:hidden;border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); width: 80%; margin: 0 auto;">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/osbwFQ0bAlA"
+              title="High Interaction Scenario"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
         <p style="text-align: center; font-style: italic; color: #666; margin-top: 10px;">
           In high interaction scenarios with 10 cooperative pedestrians and 10 non-cooperative pedestrians, 
