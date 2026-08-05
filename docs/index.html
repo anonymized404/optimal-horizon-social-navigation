@@ -481,7 +481,7 @@
 
   <script>
     let currentSlide = 0;
-    const totalSlides = 6;
+    let totalSlides = 9;
     const visibleSlides = 2;
 
     function changeSlide(direction) {
@@ -533,6 +533,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+      totalSlides = document.querySelectorAll('#results-carousel .item').length;
       updateCarousel();
     });
 
@@ -571,7 +572,7 @@
             <div style="font-size: 30px; font-family: 'Comic Sans MS', cursive, sans-serif; font-weight: bold; text-transform: uppercase; color: pink; background: linear-gradient(135deg, #FFB6C1, #FF69B4); 
             -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; 
             letter-spacing: 3px; text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);">Submitted to IEEE RAL 2026</div>
-            
+
             <div class="column has-text-centered">
               <div class="publication-links">
                 <!-- Paper 按钮暂时注释
@@ -594,7 +595,7 @@
                   </a>
                 </span>
                 <span class="link-block">
-                  <a href="video/real_world/2026RAL.mp4" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://youtu.be/6oRvNSDyots" target="_blank" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fas fa-video"></i>
                     </span>
@@ -621,6 +622,31 @@
                 -->
               </div>
             </div>
+
+            <div style="max-width: 720px; margin: 1.75rem auto 0; padding: 1.25rem 1.5rem; border: 1px solid #e8a9a4;
+            border-left: 4px solid #d93025; border-radius: 6px; background: #fdf7f6; text-align: left;">
+              <p style="margin-bottom: 0.5rem; font-weight: 700; color: #c5221f; font-size: 1rem;">
+                A Sincere Apology to the Reviewers
+              </p>
+              <p style="color: #555; font-size: 0.92rem; line-height: 1.75;">
+                Due to an issue we could not identify, the video submitted with our rebuttal did not replace the earlier
+                version, so the intended material may not have been visible during your evaluation. We deeply regret any
+                confusion this may have caused, and we have already contacted the RAL editorial office about it. As a remedy,
+                the full-resolution rebuttal video is provided below. Thank you for your time and patience, and please accept
+                our sincere apologies once again.
+              </p>
+              <div style="position: relative; padding-top: 56.25%; height: 0; overflow: hidden; border-radius: 6px;
+              margin-top: 1rem;">
+                <iframe
+                  src="https://www.youtube.com/embed/6oRvNSDyots?rel=0&cc_load_policy=0"
+                  title="Rebuttal video"
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen>
+                </iframe>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -637,7 +663,7 @@
           <div class="item">
             <div class="video-card">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/Gn1b2_BDeRE?rel=0&playsinline=1&v=2"
+                src="https://www.youtube-nocookie.com/embed/Gn1b2_BDeRE?rel=0&playsinline=1&v=2&cc_load_policy=0"
                 title="Case 1"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
@@ -648,7 +674,7 @@
           <div class="item">
             <div class="video-card">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/c7pkxH3eN-c"
+                src="https://www.youtube-nocookie.com/embed/c7pkxH3eN-c?rel=0&cc_load_policy=0"
                 title="Case 2"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
@@ -659,7 +685,7 @@
           <div class="item">
             <div class="video-card">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/HGi9_TkEmt0"
+                src="https://www.youtube-nocookie.com/embed/HGi9_TkEmt0?rel=0&cc_load_policy=0"
                 title="Case 3"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
@@ -670,7 +696,7 @@
           <div class="item">
             <div class="video-card">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/S0CLQIW7GwM"
+                src="https://www.youtube-nocookie.com/embed/S0CLQIW7GwM?rel=0&cc_load_policy=0"
                 title="Case 4"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
@@ -681,7 +707,7 @@
           <div class="item">
             <div class="video-card">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/VY8P8_vBaQo"
+                src="https://www.youtube-nocookie.com/embed/VY8P8_vBaQo?rel=0&cc_load_policy=0"
                 title="Case 5"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
@@ -692,8 +718,41 @@
           <div class="item">
             <div class="video-card">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/ay1lVlHjpU8"
+                src="https://www.youtube-nocookie.com/embed/ay1lVlHjpU8?rel=0&cc_load_policy=0"
                 title="Case 6"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/2D5UkQ4tR3U?rel=0&cc_load_policy=0"
+                title="Case 7"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/iAxiZTDGLYA?rel=0&cc_load_policy=0"
+                title="Case 8"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="video-card">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/pBL_q6q12KQ?rel=0&cc_load_policy=0"
+                title="Case 9"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
               </iframe>
@@ -708,6 +767,9 @@
           <span class="dot" onclick="goToSlide(3)"></span>
           <span class="dot" onclick="goToSlide(4)"></span>
           <span class="dot" onclick="goToSlide(5)"></span>
+          <span class="dot" onclick="goToSlide(6)"></span>
+          <span class="dot" onclick="goToSlide(7)"></span>
+          <span class="dot" onclick="goToSlide(8)"></span>
         </div>
         
         <h2 class="subtitle has-text-centered">
@@ -725,7 +787,7 @@
           <div class="publication-video">
             <div class="main-video-wrapper">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/40AMmCSlf0E"
+                src="https://www.youtube-nocookie.com/embed/40AMmCSlf0E?rel=0&cc_load_policy=0"
                 title="Demo video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
@@ -1068,7 +1130,7 @@
           <div style="text-align: center; margin: 20px 0;">
             <div style="position:relative;padding-top:56.25%;height:0;overflow:hidden;border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); width: 80%; margin: 0 auto;">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/1BSc_I14HMc"
+                src="https://www.youtube-nocookie.com/embed/1BSc_I14HMc?rel=0&cc_load_policy=0"
                 title="Medium Interaction Scenario"
                 style="position:absolute;top:0;left:0;width:100%;height:100%;"
                 frameborder="0"
@@ -1088,7 +1150,7 @@
         <div style="text-align: center; margin: 20px 0;">
           <div style="position:relative;padding-top:56.25%;height:0;overflow:hidden;border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); width: 80%; margin: 0 auto;">
             <iframe
-              src="https://www.youtube-nocookie.com/embed/DyNxkzFxyPA"
+              src="https://www.youtube-nocookie.com/embed/DyNxkzFxyPA?rel=0&cc_load_policy=0"
               title="Medium Interaction Scenario"
               style="position:absolute;top:0;left:0;width:100%;height:100%;"
               frameborder="0"
@@ -1108,7 +1170,7 @@
         <div style="text-align: center; margin: 20px 0;">
           <div style="position:relative;padding-top:56.25%;height:0;overflow:hidden;border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); width: 80%; margin: 0 auto;">
             <iframe
-              src="https://www.youtube-nocookie.com/embed/osbwFQ0bAlA"
+              src="https://www.youtube-nocookie.com/embed/osbwFQ0bAlA?rel=0&cc_load_policy=0"
               title="High Interaction Scenario"
               style="position:absolute;top:0;left:0;width:100%;height:100%;"
               frameborder="0"
