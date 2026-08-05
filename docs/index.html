@@ -431,6 +431,59 @@
       width: 100%;
     }
 
+    /* Three-line (booktabs style) result tables */
+    .booktabs {
+      width: 100%;
+      margin: 0.5rem auto 0;
+      border-collapse: collapse;
+      background: #ffffff;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      font-size: 0.82rem;
+      font-variant-numeric: tabular-nums;
+      border-top: 2px solid #333;
+      border-bottom: 2px solid #333;
+    }
+
+    .booktabs thead th {
+      padding: 0.5rem 0.55rem;
+      text-align: center;
+      font-weight: 600;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .booktabs thead tr:last-child th,
+    .booktabs thead tr:only-child th {
+      border-bottom: 1px solid #333;
+    }
+
+    .booktabs tbody th,
+    .booktabs tbody td {
+      padding: 0.42rem 0.55rem;
+      text-align: center;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .booktabs tbody th {
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .booktabs tbody tr:last-child th,
+    .booktabs tbody tr:last-child td {
+      font-weight: 600;
+    }
+
+    .booktabs td.best {
+      background: #e6f4ea;
+      font-weight: 700;
+    }
+
+    .booktabs td.second {
+      font-weight: 700;
+    }
+
     /* Responsive - 响应式设计 */
     @media (max-width: 768px) {
       .publication-title {
@@ -608,6 +661,22 @@
                       <i class="fas fa-database"></i>
                     </span>
                     <span>Data</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#setup" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-sliders-h"></i>
+                    </span>
+                    <span>Parameters</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#records" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-table"></i>
+                    </span>
+                    <span>Evaluation Records</span>
                   </a>
                 </span>
                 <!-- 附件按钮暂时注释
@@ -801,7 +870,7 @@
         <br><br>
         In this paper, we reformulate prediction-horizon decision as a socially conditioned decision process rather than a fixed design choice. Based on this insight, we propose an optimal-horizon social navigation framework that dynamically determines the MPC prediction horizon according to social context. A spatio-temporal Transformer infers pedestrian cooperation attributes from local trajectory observations, which serve as social priors for a reinforcement learning policy that selects the prediction horizon online. The resulting optimal-horizon MPC further incorporates socially aware safety constraints to balance navigation efficiency and interaction safety.
         <br><br>
-        Extensive simulations and real-world robot experiments demonstrate that adaptive prediction-horizon decision significantly improves navigation robustness in partially observable crowds. Compared to state-of-the-art baselines, the proposed approach improves success rate by <strong>6.8%</strong>, reduces collision rate by approximately <strong>50%</strong>, and shortens navigation time by <strong>19%</strong>, while maintaining a low timeout rate of <strong>0.8%</strong>. These results suggest that socially conditioned prediction-horizon decision can improve the robustness and efficiency of robot navigation in crowded environments. Code and videos are available at <a href="https://anonymous.4open.science/r/optimal-horizon-social-navigation-4F07/" target="_blank" rel="noopener">https://anonymous.4open.science/r/optimal-horizon-social-navigation-4F07/</a>.
+        Extensive simulations and real-world robot experiments demonstrate that adaptive prediction-horizon decision significantly improves navigation robustness in partially observable crowds. Compared to state-of-the-art baselines, the proposed approach achieves the highest success rate in all three interaction scenarios, improving over the strongest baseline (GST-RL) by <strong>6.0</strong>, <strong>7.3</strong>, and <strong>9.1</strong> percentage points in the low-, mid-, and high-interaction settings, respectively. It also yields significantly shorter navigation times than GST-RL across all scenarios, while maintaining low timeout rates of <strong>1.3%</strong>, <strong>0.5%</strong>, and <strong>0.5%</strong>. These results suggest that socially conditioned prediction-horizon decision can improve the robustness and efficiency of robot navigation in crowded environments. Code and videos are available at <a href="https://anonymous.4open.science/r/optimal-horizon-social-navigation-4F07/" target="_blank" rel="noopener">https://anonymous.4open.science/r/optimal-horizon-social-navigation-4F07/</a>.
       </div>
     </div>
   </section>
@@ -832,13 +901,13 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="setup">
     <div class="container">
       <h3 class="title is-3">Experimental Setup</h3>
       <div class="content has-text-justified">
         <h4>Simulation Environment</h4>
         <p>
-          We extend the CrowdNav environment to a realistic 2D pedestrian simulation. The robot is equipped with a limited 5m circular sensing range and a 360° field of view, instead of assuming full observability. To reflect real-world uncertainty, pedestrians may be partially occluded. Social diversity is introduced by modeling cooperative pedestrians whose trajectories adapt to the robot, and non-cooperative pedestrians whose behaviors remain unaffected and non-visible to the robot. All pedestrians follow the ORCA strategy under speed and curvature constraints.
+          We extend the CrowdNav environment to a realistic 2D pedestrian simulation. The robot is equipped with a limited 5m circular sensing range and a 360° field of view, instead of assuming full observability. To reflect real-world uncertainty, pedestrians may be partially occluded. Social diversity is introduced by modeling cooperative and non-cooperative pedestrians under a controlled interaction protocol: a cooperative pedestrian's motion policy receives and accounts for the robot state, whereas a non-cooperative pedestrian's motion policy does not. The robot observes pedestrian trajectories within its sensing range in either case. All pedestrians follow the ORCA strategy under speed and curvature constraints.
         </p>
         
         <h4>Environment Parameters</h4>
@@ -875,8 +944,8 @@
               </tr>
               <tr>
                 <td class="parameter-cell">Safety Distance</td>
-                <td class="value-cell">0.5m</td>
-                <td class="value-cell">Minimum distance around robot and other agents</td>
+                <td class="value-cell">d<sub>0</sub> = 0.1m, d<sub>coop</sub> = 0m, d<sub>non-coop</sub> = 0.4m</td>
+                <td class="value-cell">Cooperation-dependent additional margin: 0.1m for cooperative and 0.5m for non-cooperative pedestrians</td>
               </tr>
               <tr>
                 <td class="parameter-cell">Prediction Horizon</td>
@@ -1015,7 +1084,7 @@
         </p>
         
         <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 16px; margin: 20px 0;">
-          <strong>r<sub>t</sub> = r<sub>t</sub><sup>term</sup> + r<sub>t</sub><sup>pot</sup> + r<sub>t</sub><sup>kin</sup> + r<sub>t</sub><sup>horizon</sup> + r<sub>t</sub><sup>vis_social</sup></strong>
+          <strong>R<sub>t</sub> = R<sub>t</sub><sup>term</sup> + R<sub>t</sub><sup>pot</sup> + R<sub>t</sub><sup>kin</sup> + R<sub>t</sub><sup>horizon</sup> + R<sub>t</sub><sup>vis_social</sup></strong>
         </p>
         
         <div class="table-container">
@@ -1033,7 +1102,7 @@
               <tr>
                 <td class="parameter-cell">Terminal Reward</td>
                 <td class="formula-cell">
-                  r<sub>t</sub><sup>term</sup> = <br>
+                  R<sub>t</sub><sup>term</sup> = <br>
                   +10, if goal reached<br>
                   -20, if collision or timeout<br>
                   0, otherwise
@@ -1044,7 +1113,7 @@
               <tr>
                 <td class="parameter-cell">Potential Reward</td>
                 <td class="formula-cell">
-                  r<sub>t</sub><sup>pot</sup> = -λ<sub>pot</sub>(Φ<sub>t</sub> - Φ<sub>t-1</sub>)<br>
+                  R<sub>t</sub><sup>pot</sup> = -λ<sub>pot</sub>(Φ<sub>t</sub> - Φ<sub>t-1</sub>)<br>
                   where Φ<sub>t</sub> = ||p<sub>t</sub><sup>r</sup> - g|| 
                 </td>
                 <td class="value-cell">λ<sub>pot</sub> = 2</td>
@@ -1053,7 +1122,7 @@
               <tr>
                 <td class="parameter-cell">Kinematic Reward</td>
                 <td class="formula-cell">
-                  r<sub>t</sub><sup>kin</sup> = -λ<sub>r</sub>w<sub>t</sub><sup>2</sup> - λ<sub>v</sub>max(0, -v<sub>t</sub>)
+                  R<sub>t</sub><sup>kin</sup> = -λ<sub>r</sub>w<sub>t</sub><sup>2</sup> - λ<sub>v</sub>max(0, -v<sub>t</sub>)
                 </td>
                 <td class="value-cell">λ<sub>r</sub> = 5<br>λ<sub>v</sub> = 2</td>
                 <td class="value-cell">Discourages aggressive or backward motions for smooth navigation</td>
@@ -1061,24 +1130,24 @@
               <tr>
                 <td class="parameter-cell">Horizon Reward</td>
                 <td class="formula-cell">
-                  r<sub>t</sub><sup>horizon</sup> = -λ<sub>h</sub>(h<sub>max</sub> - h<sub>t</sub>)
+                  R<sub>t</sub><sup>horizon</sup> = -λ<sub>h</sub>(h<sub>max</sub> - h<sub>t</sub>)
                 </td>
-                <td class="value-cell">λ<sub>h</sub> = 0.1<br>h<sub>max</sub> = 8</td>
+                <td class="value-cell">λ<sub>h</sub> = 0.085<br>h<sub>max</sub> = 8</td>
                 <td class="value-cell">Encourages appropriate MPC prediction horizon selection for efficiency</td>
               </tr>
               <tr>
                 <td class="parameter-cell">Visibility Social Reward</td>
                 <td class="formula-cell" style="font-size: 0.8rem; line-height: 1.3;">
-                  r<sub>t</sub><sup>vis_social</sup> = <br>
+                  R<sub>t</sub><sup>vis_social</sup> = <br>
                   λ<sub>high</sub>·h<sub>t</sub><sup>η<sub>high</sub></sup>·ρ<sub>no-coop</sub>, if ρ<sub>no-coop</sub> > 0.5<br>
                   λ<sub>low</sub>·h<sub>t</sub><sup>η<sub>low</sub></sup>·(1-ρ<sub>no-coop</sub>), otherwise
                 </td>
                 <td class="value-cell" style="font-size: 0.85rem; line-height: 1.4;">
-                  λ<sub>high</sub> = 0.05<br>
-                  λ<sub>low</sub> = 0.01<br>
-                  η<sub>high</sub> = 1.2<br>
-                  η<sub>low</sub> = 0.8<br>
-                  threshold = 0.5
+                  λ<sub>high</sub> = 0.085<br>
+                  λ<sub>low</sub> = 0.0175<br>
+                  η<sub>high</sub> = 1.15<br>
+                  η<sub>low</sub> = 1<br>
+                  ρ<sub>th</sub> = 0.5
                 </td>
                 <td class="value-cell" style="font-size: 0.85rem; line-height: 1.4;">
                   Rewards considering cooperation of visible pedestrians, where ρ<sub>no-coop</sub> is the fraction of non-cooperative pedestrians
@@ -1098,7 +1167,10 @@
         
         <h4>Evaluation Metrics</h4>
         <p>
-          Performance is assessed across scenarios with low, medium, and high interaction levels, characterized by varying ratios of cooperative and non-cooperative pedestrians. Each model is tested on 250 random unseen cases and evaluated based on success rate (SR%), collision rate (CR%), timeout rate (OR%), average navigation time (ANT), average trajectory length (ATL), and average intrusion ratio (AIR%).
+          Performance is assessed across low, medium, and high interaction scenarios with different cooperative/non-cooperative ratios.
+          Each method is evaluated on the same 10 random seeds with 100 unseen episodes per seed and scenario.
+          We report success rate (SR%), collision rate (CR%), timeout rate (OR%), average navigation time (ANT),
+          average trajectory length (ATL), and social distance (SD).
         </p>
 
       </div>
@@ -1302,7 +1374,53 @@
                 <td class="parameter-cell">1560</td>
                 <td class="value-cell">93.71%</td>
                 <td class="value-cell">93.14%</td>
-                <td class="value-cell">98.91%</td>
+                <td class="value-cell">98.75%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Held-Out Test Performance</h4>
+        <div class="table-container">
+          <div class="table-title">Cooperation Predictor: Dataset and Held-Out Results</div>
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="parameter-cell">Training Samples</td>
+                <td class="value-cell">1,647,453</td>
+                <td class="value-cell">Simulator-generated pedestrian trajectory samples</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Test Samples</td>
+                <td class="value-cell">382,901</td>
+                <td class="value-cell">Disjoint test set, split at the episode level</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Training Loss</td>
+                <td class="value-cell">Cross-entropy</td>
+                <td class="value-cell">Supervised by the simulator interaction protocol labels</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Accuracy</td>
+                <td class="value-cell">93.14%</td>
+                <td class="value-cell">Held-out test set</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">ROC AUC</td>
+                <td class="value-cell">98.75%</td>
+                <td class="value-cell">Held-out test set</td>
+              </tr>
+              <tr>
+                <td class="parameter-cell">Average Precision</td>
+                <td class="value-cell">98.02%</td>
+                <td class="value-cell">Held-out test set</td>
               </tr>
             </tbody>
           </table>
@@ -1349,6 +1467,186 @@
           </table>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="records">
+    <div class="container">
+      <h3 class="title is-3">Supplementary Materials</h3>
+      <div class="content has-text-justified">
+        <p>
+          Complete six-metric results (SR, CR, OR, ANT, ATL, SD) and seed-matched statistical comparisons
+          corresponding to the revised manuscript and the rebuttal response. All methods use the same 10 random
+          seeds with 100 unseen episodes per seed and scenario. Metrics are computed at the seed level and reported
+          as mean&plusmn;std over the 10 seed-level results; ATL is computed over successful episodes only.
+          The best value for each metric is highlighted, and the second-best value is shown in bold.
+          Code and additional materials are available via the Code button above.
+        </p>
+      </div>
+
+        <div class="table-container">
+          <div class="table-title">Baseline Comparison &mdash; Low Interaction Scenario (0 cooperative / 20 non-cooperative)</div>
+          <table class="booktabs">
+            <thead>
+              <tr><th>Method</th><th>SR (%) &uarr;</th><th>CR (%) &darr;</th><th>OR (%) &darr;</th><th>ANT (s) &darr;</th><th>ATL (m) &darr;</th><th>SD (m) &uarr;</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">SF</th><td>19.4±3.6</td><td>68.1±2.8</td><td>12.5±1.5</td><td>15.19±0.82</td><td>12.58±0.50</td><td>0.34±0.01</td></tr>
+              <tr><th scope="row">ORCA</th><td>65.3±3.5</td><td>20.5±3.6</td><td>14.2±2.9</td><td>12.33±0.53</td><td class="second">10.72±0.30</td><td>0.53±0.01</td></tr>
+              <tr><th scope="row">DS-RNN</th><td>50.1±6.6</td><td>41.4±6.5</td><td>8.5±2.7</td><td>12.92±0.41</td><td>12.39±0.27</td><td>0.52±0.01</td></tr>
+              <tr><th scope="row">GenSafeNav</th><td>56.5±2.3</td><td class="best">4.8±0.9</td><td>38.7±2.9</td><td>17.22±0.45</td><td>17.41±0.45</td><td class="best">0.57±0.01</td></tr>
+              <tr><th scope="row">GST-RL</th><td class="second">82.3±4.0</td><td>11.1±2.2</td><td>6.6±2.7</td><td>13.75±0.17</td><td>13.54±0.13</td><td>0.53±0.03</td></tr>
+              <tr><th scope="row">DR-MPC</th><td>23.6±2.8</td><td>76.4±2.8</td><td class="best">0.0±0.0</td><td class="best">6.74±0.39</td><td class="best">5.85±0.45</td><td>0.34±0.01</td></tr>
+              <tr><th scope="row">HiCrowd</th><td>46.9±1.9</td><td>46.9±3.3</td><td>6.2±2.7</td><td>11.26±0.52</td><td>11.20±0.52</td><td>0.49±0.01</td></tr>
+              <tr><th scope="row">Ours</th><td class="best">88.3±2.8</td><td class="second">10.4±2.5</td><td class="second">1.3±0.9</td><td class="second">11.00±0.15</td><td>12.01±0.15</td><td class="second">0.56±0.01</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-container">
+          <div class="table-title">Baseline Comparison &mdash; Mid Interaction Scenario (5 cooperative / 15 non-cooperative)</div>
+          <table class="booktabs">
+            <thead>
+              <tr><th>Method</th><th>SR (%) &uarr;</th><th>CR (%) &darr;</th><th>OR (%) &darr;</th><th>ANT (s) &darr;</th><th>ATL (m) &darr;</th><th>SD (m) &uarr;</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">SF</th><td>31.7±2.0</td><td>54.4±2.3</td><td>13.9±1.4</td><td>14.56±0.50</td><td>12.17±0.23</td><td>0.34±0.01</td></tr>
+              <tr><th scope="row">ORCA</th><td>74.3±3.6</td><td>15.7±2.2</td><td>10.0±2.7</td><td>12.28±0.27</td><td class="second">10.72±0.20</td><td class="second">0.53±0.01</td></tr>
+              <tr><th scope="row">DS-RNN</th><td>58.6±4.2</td><td>32.9±6.5</td><td>8.5±3.7</td><td>13.08±0.59</td><td>12.42±0.37</td><td>0.52±0.01</td></tr>
+              <tr><th scope="row">GenSafeNav</th><td>58.4±3.1</td><td class="best">2.8±0.4</td><td>38.8±3.1</td><td>17.50±0.29</td><td>17.68±0.30</td><td>0.50±0.03</td></tr>
+              <tr><th scope="row">GST-RL</th><td class="second">84.5±2.8</td><td class="second">7.2±2.5</td><td>8.3±1.6</td><td>13.36±0.33</td><td>13.26±0.27</td><td>0.49±0.01</td></tr>
+              <tr><th scope="row">DR-MPC</th><td>29.8±3.2</td><td>70.2±3.2</td><td class="best">0.0±0.0</td><td class="best">7.23±0.26</td><td class="best">6.23±0.25</td><td>0.34±0.01</td></tr>
+              <tr><th scope="row">HiCrowd</th><td>65.4±5.6</td><td>27.0±4.0</td><td>7.6±3.9</td><td>11.31±0.45</td><td>11.26±0.45</td><td>0.50±0.01</td></tr>
+              <tr><th scope="row">Ours</th><td class="best">91.8±1.9</td><td>7.7±2.2</td><td class="second">0.5±0.5</td><td class="second">10.46±0.30</td><td>11.52±0.16</td><td class="best">0.55±0.01</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-container">
+          <div class="table-title">Baseline Comparison &mdash; High Interaction Scenario (10 cooperative / 10 non-cooperative)</div>
+          <table class="booktabs">
+            <thead>
+              <tr><th>Method</th><th>SR (%) &uarr;</th><th>CR (%) &darr;</th><th>OR (%) &darr;</th><th>ANT (s) &darr;</th><th>ATL (m) &darr;</th><th>SD (m) &uarr;</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">SF</th><td>42.2±2.0</td><td>44.3±5.1</td><td>13.5±4.8</td><td>14.71±0.66</td><td>12.18±0.35</td><td>0.34±0.01</td></tr>
+              <tr><th scope="row">ORCA</th><td>83.2±3.6</td><td>7.2±1.8</td><td>9.6±2.5</td><td>11.95±0.33</td><td class="second">10.61±0.22</td><td class="second">0.53±0.02</td></tr>
+              <tr><th scope="row">DS-RNN</th><td>70.0±2.2</td><td>20.1±3.3</td><td>9.9±2.6</td><td>12.57±0.28</td><td>12.06±0.18</td><td>0.52±0.00</td></tr>
+              <tr><th scope="row">GenSafeNav</th><td>61.4±3.1</td><td class="best">1.5±0.8</td><td>37.1±2.7</td><td>17.48±0.36</td><td>17.67±0.36</td><td>0.53±0.05</td></tr>
+              <tr><th scope="row">GST-RL</th><td class="second">88.2±2.4</td><td>5.6±0.8</td><td>6.2±2.5</td><td>13.13±0.23</td><td>12.96±0.26</td><td>0.48±0.04</td></tr>
+              <tr><th scope="row">DR-MPC</th><td>43.4±3.1</td><td>56.6±3.1</td><td class="best">0.0±0.0</td><td class="best">7.84±0.12</td><td class="best">6.72±0.30</td><td>0.34±0.00</td></tr>
+              <tr><th scope="row">HiCrowd</th><td>86.0±3.1</td><td>5.2±1.5</td><td>8.8±1.8</td><td>11.06±0.48</td><td>11.02±0.49</td><td>0.51±0.02</td></tr>
+              <tr><th scope="row">Ours</th><td class="best">97.3±1.1</td><td class="second">2.2±1.0</td><td class="second">0.5±0.8</td><td class="second">10.20±0.48</td><td>11.34±0.26</td><td class="best">0.55±0.01</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-container">
+          <div class="table-title">Prediction-Horizon Ablation &mdash; Low Interaction Scenario</div>
+          <table class="booktabs">
+            <thead>
+              <tr><th>Horizon</th><th>SR (%) &uarr;</th><th>CR (%) &darr;</th><th>OR (%) &darr;</th><th>ANT (s) &darr;</th><th>ATL (m) &darr;</th><th>SD (m) &uarr;</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">1</th><td>54.9±3.6</td><td>43.6±3.7</td><td>1.5±0.7</td><td class="second">10.68±0.38</td><td class="best">10.88±0.19</td><td>0.34±0.00</td></tr>
+              <tr><th scope="row">2</th><td>55.7±2.6</td><td>42.8±2.7</td><td>1.5±0.7</td><td class="best">10.66±0.46</td><td class="second">10.96±0.24</td><td>0.34±0.00</td></tr>
+              <tr><th scope="row">3</th><td>69.5±2.1</td><td>28.3±2.6</td><td>2.2±1.1</td><td>10.81±0.42</td><td>11.23±0.29</td><td>0.35±0.00</td></tr>
+              <tr><th scope="row">4</th><td>73.0±2.9</td><td>24.3±3.2</td><td>2.7±0.7</td><td>10.78±0.38</td><td>11.35±0.23</td><td>0.36±0.01</td></tr>
+              <tr><th scope="row">5</th><td>74.2±2.5</td><td>23.4±3.1</td><td>2.4±1.1</td><td>10.85±0.40</td><td>11.38±0.29</td><td>0.38±0.01</td></tr>
+              <tr><th scope="row">6</th><td>74.0±3.0</td><td>23.7±2.9</td><td>2.3±1.7</td><td>11.17±0.30</td><td>11.47±0.14</td><td>0.39±0.01</td></tr>
+              <tr><th scope="row">7</th><td>73.0±2.5</td><td>24.9±2.6</td><td>2.1±1.4</td><td>11.48±0.30</td><td>11.59±0.18</td><td>0.42±0.01</td></tr>
+              <tr><th scope="row">8</th><td class="second">83.0±4.7</td><td class="second">16.2±4.1</td><td class="best">0.8±1.9</td><td>11.27±0.39</td><td>11.71±0.38</td><td>0.53±0.01</td></tr>
+              <tr><th scope="row">9</th><td>80.7±2.5</td><td>16.8±1.8</td><td>2.5±2.2</td><td>11.47±0.39</td><td>11.92±0.28</td><td>0.52±0.02</td></tr>
+              <tr><th scope="row">10</th><td>79.8±2.4</td><td>16.7±2.1</td><td>3.5±1.8</td><td>11.60±0.48</td><td>12.11±0.30</td><td class="second">0.54±0.01</td></tr>
+              <tr><th scope="row">11</th><td>78.0±2.6</td><td>18.1±2.4</td><td>3.9±1.3</td><td>11.88±0.34</td><td>12.18±0.29</td><td>0.50±0.01</td></tr>
+              <tr><th scope="row">Ours (&Delta; vs. h=8)</th><td style="color:#006400;font-weight:700;">+5.3</td><td style="color:#006400;font-weight:700;">&minus;5.8</td><td style="color:#d62728;font-weight:700;">+0.5</td><td style="color:#d62728;font-weight:700;">+0.34</td><td style="color:#d62728;font-weight:700;">+1.13</td><td style="color:#006400;font-weight:700;">+0.02</td></tr>
+              <tr><th scope="row">Ours</th><td class="best">88.3±2.8</td><td class="best">10.4±2.5</td><td class="second">1.3±0.9</td><td>11.00±0.15</td><td>12.01±0.15</td><td class="best">0.56±0.01</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-container">
+          <div class="table-title">Cooperation-Prediction Ablation (Mid / High Interaction)</div>
+          <table class="booktabs">
+            <thead>
+              <tr><th>Scenario</th><th>Method</th><th>SR (%) &uarr;</th><th>CR (%) &darr;</th><th>OR (%) &darr;</th><th>ANT (s) &darr;</th><th>ATL (m) &darr;</th><th>SD (m) &uarr;</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Mid Interaction</th><th scope="row">w/o ST-Transformer</th><td class="second">88.7±1.2</td><td class="second">8.3±0.8</td><td class="second">3.0±0.6</td><td class="second">10.82±0.30</td><td class="second">11.67±0.18</td><td class="second">0.49±0.02</td></tr>
+              <tr><th scope="row">Mid Interaction</th><th scope="row">Ours</th><td class="best">91.8±1.9</td><td class="best">7.7±2.2</td><td class="best">0.5±0.5</td><td class="best">10.46±0.30</td><td class="best">11.52±0.16</td><td class="best">0.55±0.01</td></tr>
+              <tr><th scope="row">High Interaction</th><th scope="row">w/o ST-Transformer</th><td class="second">93.3±1.9</td><td class="second">5.6±2.1</td><td class="second">1.1±0.5</td><td class="second">10.53±0.43</td><td class="second">11.49±0.22</td><td class="second">0.50±0.02</td></tr>
+              <tr><th scope="row">High Interaction</th><th scope="row">Ours</th><td class="best">97.3±1.1</td><td class="best">2.2±1.0</td><td class="best">0.5±0.8</td><td class="best">10.20±0.48</td><td class="best">11.34±0.26</td><td class="best">0.55±0.01</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-container">
+          <div class="table-title">Seed-Matched Statistical Comparisons &mdash; Low Interaction Scenario</div>
+          <table class="booktabs">
+            <thead>
+              <tr>
+                <th rowspan="2">Method</th>
+                <th colspan="3">SR (%) &uarr;</th>
+                <th colspan="3">ANT (s) &darr;</th>
+                <th colspan="3">CR (%) &darr;</th>
+              </tr>
+              <tr><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">SF</th><td>19.4±3.6</td><td>+68.9 [+65.5, +72.4]</td><td>0.014*</td><td>15.19±0.82</td><td>+4.19 [+3.64, +4.68]</td><td>0.014*</td><td>68.1±2.8</td><td>+57.7 [+54.8, +60.4]</td><td>0.014*</td></tr>
+              <tr><th scope="row">ORCA</th><td>65.3±3.5</td><td>+23.0 [+22.0, +24.2]</td><td>0.014*</td><td>12.33±0.53</td><td>+1.33 [+1.02, +1.66]</td><td>0.014*</td><td>20.5±3.6</td><td>+10.1 [+8.7, +11.2]</td><td>0.014*</td></tr>
+              <tr><th scope="row">DS-RNN</th><td>50.1±6.6</td><td>+38.2 [+35.2, +41.1]</td><td>0.014*</td><td>12.92±0.41</td><td>+1.92 [+1.68, +2.12]</td><td>0.014*</td><td>41.4±6.5</td><td>+31.0 [+28.2, +33.9]</td><td>0.014*</td></tr>
+              <tr><th scope="row">GenSafeNav</th><td>56.5±2.3</td><td>+31.8 [+29.1, +34.3]</td><td>0.014*</td><td>17.22±0.45</td><td>+6.22 [+5.90, +6.50]</td><td>0.014*</td><td class="best">4.8±0.9</td><td>&minus;5.6 [&minus;7.2, &minus;4.3]</td><td>0.014*</td></tr>
+              <tr><th scope="row">GST-RL</th><td class="second">82.3±4.0</td><td>+6.0 [+2.9, +9.4]</td><td>0.014*</td><td>13.75±0.17</td><td>+2.75 [+2.62, +2.90]</td><td>0.014*</td><td>11.1±2.2</td><td>+0.7 [&minus;1.3, +2.5]</td><td>0.562</td></tr>
+              <tr><th scope="row">DR-MPC</th><td>23.6±2.8</td><td>+64.7 [+62.2, +67.4]</td><td>0.014*</td><td class="best">6.74±0.39</td><td>&minus;4.26 [&minus;4.57, &minus;3.99]</td><td>0.014*</td><td>76.4±2.8</td><td>+66.0 [+63.9, +68.1]</td><td>0.014*</td></tr>
+              <tr><th scope="row">HiCrowd</th><td>46.9±1.9</td><td>+41.4 [+39.6, +43.1]</td><td>0.014*</td><td>11.26±0.52</td><td>+0.26 [&minus;0.01, +0.60]</td><td>0.150</td><td>46.9±3.3</td><td>+36.5 [+33.2, +39.3]</td><td>0.014*</td></tr>
+              <tr><th scope="row">Ours</th><td class="best">88.3±2.8</td><td>&ndash;</td><td>&ndash;</td><td class="second">11.00±0.15</td><td>&ndash;</td><td>&ndash;</td><td class="second">10.4±2.5</td><td>&ndash;</td><td>&ndash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-container">
+          <div class="table-title">Seed-Matched Statistical Comparisons &mdash; Mid Interaction Scenario</div>
+          <table class="booktabs">
+            <thead>
+              <tr>
+                <th rowspan="2">Method</th>
+                <th colspan="3">SR (%) &uarr;</th>
+                <th colspan="3">ANT (s) &darr;</th>
+                <th colspan="3">CR (%) &darr;</th>
+              </tr>
+              <tr><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">SF</th><td>31.7±2.0</td><td>+60.1 [+58.8, +61.4]</td><td>0.014*</td><td>14.56±0.50</td><td>+4.10 [+3.84, +4.37]</td><td>0.014*</td><td>54.4±2.3</td><td>+46.7 [+45.3, +47.9]</td><td>0.014*</td></tr>
+              <tr><th scope="row">ORCA</th><td>74.3±3.6</td><td>+17.5 [+15.2, +19.7]</td><td>0.014*</td><td>12.28±0.27</td><td>+1.82 [+1.56, +2.10]</td><td>0.014*</td><td>15.7±2.2</td><td>+8.0 [+6.6, +9.6]</td><td>0.014*</td></tr>
+              <tr><th scope="row">DS-RNN</th><td>58.6±4.2</td><td>+33.2 [+30.6, +35.8]</td><td>0.014*</td><td>13.08±0.59</td><td>+2.62 [+2.38, +2.85]</td><td>0.014*</td><td>32.9±6.5</td><td>+25.2 [+20.9, +30.0]</td><td>0.014*</td></tr>
+              <tr><th scope="row">GenSafeNav</th><td>58.4±3.1</td><td>+33.4 [+32.2, +34.5]</td><td>0.014*</td><td>17.50±0.29</td><td>+7.04 [+6.78, +7.34]</td><td>0.014*</td><td class="best">2.8±0.4</td><td>&minus;4.9 [&minus;6.0, &minus;3.5]</td><td>0.014*</td></tr>
+              <tr><th scope="row">GST-RL</th><td class="second">84.5±2.8</td><td>+7.3 [+5.4, +9.3]</td><td>0.014*</td><td>13.36±0.33</td><td>+2.90 [+2.66, +3.16]</td><td>0.014*</td><td class="second">7.2±2.5</td><td>&minus;0.5 [&minus;2.8, +1.8]</td><td>0.744</td></tr>
+              <tr><th scope="row">DR-MPC</th><td>29.8±3.2</td><td>+62.0 [+60.3, +64.0]</td><td>0.014*</td><td class="best">7.23±0.26</td><td>&minus;3.23 [&minus;3.46, &minus;2.98]</td><td>0.014*</td><td>70.2±3.2</td><td>+62.5 [+60.6, +64.6]</td><td>0.014*</td></tr>
+              <tr><th scope="row">HiCrowd</th><td>65.4±5.6</td><td>+26.4 [+22.8, +30.2]</td><td>0.014*</td><td>11.31±0.45</td><td>+0.85 [+0.58, +1.16]</td><td>0.014*</td><td>27.0±4.0</td><td>+19.3 [+17.1, +22.1]</td><td>0.014*</td></tr>
+              <tr><th scope="row">Ours</th><td class="best">91.8±1.9</td><td>&ndash;</td><td>&ndash;</td><td class="second">10.46±0.30</td><td>&ndash;</td><td>&ndash;</td><td>7.7±2.2</td><td>&ndash;</td><td>&ndash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-container">
+          <div class="table-title">Seed-Matched Statistical Comparisons &mdash; High Interaction Scenario</div>
+          <table class="booktabs">
+            <thead>
+              <tr>
+                <th rowspan="2">Method</th>
+                <th colspan="3">SR (%) &uarr;</th>
+                <th colspan="3">ANT (s) &darr;</th>
+                <th colspan="3">CR (%) &darr;</th>
+              </tr>
+              <tr><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th><th>Mean</th><th>&Delta; [95% CI]</th><th>p<sub>Holm</sub></th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">SF</th><td>42.2±2.0</td><td>+55.1 [+53.9, +56.4]</td><td>0.014*</td><td>14.71±0.66</td><td>+4.51 [+4.24, +4.76]</td><td>0.014*</td><td>44.3±5.1</td><td>+42.1 [+39.4, +44.4]</td><td>0.014*</td></tr>
+              <tr><th scope="row">ORCA</th><td>83.2±3.6</td><td>+14.1 [+12.3, +15.8]</td><td>0.014*</td><td>11.95±0.33</td><td>+1.75 [+1.36, +2.20]</td><td>0.014*</td><td>7.2±1.8</td><td>+5.0 [+4.0, +6.0]</td><td>0.014*</td></tr>
+              <tr><th scope="row">DS-RNN</th><td>70.0±2.2</td><td>+27.3 [+26.0, +28.9]</td><td>0.014*</td><td>12.57±0.28</td><td>+2.37 [+2.22, +2.53]</td><td>0.014*</td><td>20.1±3.3</td><td>+17.9 [+15.6, +20.3]</td><td>0.014*</td></tr>
+              <tr><th scope="row">GenSafeNav</th><td>61.4±3.1</td><td>+35.9 [+33.8, +38.0]</td><td>0.014*</td><td>17.48±0.36</td><td>+7.28 [+7.05, +7.56]</td><td>0.014*</td><td class="best">1.5±0.8</td><td>&minus;0.7 [&minus;1.6, +0.4]</td><td>0.289</td></tr>
+              <tr><th scope="row">GST-RL</th><td class="second">88.2±2.4</td><td>+9.1 [+7.6, +11.3]</td><td>0.014*</td><td>13.13±0.23</td><td>+2.93 [+2.56, +3.30]</td><td>0.014*</td><td>5.6±0.8</td><td>+3.4 [+2.7, +4.1]</td><td>0.014*</td></tr>
+              <tr><th scope="row">DR-MPC</th><td>43.4±3.1</td><td>+53.9 [+52.2, +55.7]</td><td>0.014*</td><td class="best">7.84±0.12</td><td>&minus;2.36 [&minus;2.61, &minus;2.09]</td><td>0.014*</td><td>56.6±3.1</td><td>+54.4 [+52.3, +56.6]</td><td>0.014*</td></tr>
+              <tr><th scope="row">HiCrowd</th><td>86.0±3.1</td><td>+11.3 [+9.4, +13.2]</td><td>0.014*</td><td>11.06±0.48</td><td>+0.86 [+0.36, +1.42]</td><td>0.014*</td><td>5.2±1.5</td><td>+3.0 [+1.8, +4.2]</td><td>0.014*</td></tr>
+              <tr><th scope="row">Ours</th><td class="best">97.3±1.1</td><td>&ndash;</td><td>&ndash;</td><td class="second">10.20±0.48</td><td>&ndash;</td><td>&ndash;</td><td class="second">2.2±1.0</td><td>&ndash;</td><td>&ndash;</td></tr>
+            </tbody>
+          </table>
+        </div>
     </div>
   </section>
 
